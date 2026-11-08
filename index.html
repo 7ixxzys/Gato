@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gato</title>
+<style>
+:root{
+  --bg:#c9d3ee; --fur:#e8903a; --fur-dark:#b9601a; --cream:#fbe4bf;
+  --ink:#2a1c14; --pink:#e98d94; --iris:#8fcf5c; --shadow:rgba(30,35,70,.22);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#1b2240; --fur:#ee9a45; --fur-dark:#c06b22; --cream:#f8dfb5;
+    --shadow:rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1b2240; --fur:#ee9a45; --fur-dark:#c06b22; --cream:#f8dfb5;
+  --shadow:rgba(0,0,0,.35);
+}
+html{height:100%;background:var(--bg);scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0;height:100%;background:var(--bg);
+  display:grid;place-items:center;overflow:hidden;
+  touch-action:none;
+}
+svg{width:min(92vw,68vh);height:auto;aspect-ratio:4/5;display:block}
+.eye{transform-box:fill-box;transform-origin:center;animation:blink 6s infinite}
+@keyframes blink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.08)}}
+@media (prefers-reduced-motion:reduce){.eye{animation:none}}
+</style>
+</head>
+<body>
+<svg viewBox="0 0 400 500" role="img" aria-label="Ilustración de un gato naranja sentado que sigue tu dedo con la mirada">
+  <ellipse cx="200" cy="460" rx="125" ry="14" fill="var(--shadow)"/>
+
+  <!-- cola -->
+  <path d="M285 440 C380 445 392 350 350 318" fill="none" stroke="var(--fur)" stroke-width="26" stroke-linecap="round"/>
+  <path d="M285 440 C380 445 392 350 350 318" fill="none" stroke="var(--fur-dark)" stroke-width="26" stroke-dasharray="9 27" stroke-dashoffset="-14"/>
+
+  <!-- cuerpo -->
+  <path d="M118 455 C98 380 130 298 200 292 C270 298 302 380 282 455 Z" fill="var(--fur)"/>
+  <g stroke="var(--fur-dark)" stroke-width="8" stroke-linecap="round" fill="none">
+    <path d="M128 380 L150 384M126 410 L148 412M272 380 L250 384M274 410 L252 412"/>
+  </g>
+  <ellipse cx="200" cy="350" rx="30" ry="40" fill="var(--cream)"/>
+
+  <!-- patas -->
+  <rect x="148" y="390" width="42" height="64" rx="21" fill="var(--fur)"/>
+  <rect x="210" y="390" width="42" height="64" rx="21" fill="var(--fur)"/>
+  <ellipse cx="169" cy="452" rx="25" ry="14" fill="var(--cream)"/>
+  <ellipse cx="231" cy="452" rx="25" ry="14" fill="var(--cream)"/>
+
+  <!-- orejas -->
+  <path d="M122 200 L118 118 L185 165 Z" fill="var(--fur)" stroke="var(--fur)" stroke-width="10" stroke-linejoin="round"/>
+  <path d="M278 200 L282 118 L215 165 Z" fill="var(--fur)" stroke="var(--fur)" stroke-width="10" stroke-linejoin="round"/>
+  <path d="M134 184 L131 140 L168 167 Z" fill="var(--pink)" stroke="var(--pink)" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M266 184 L269 140 L232 167 Z" fill="var(--pink)" stroke="var(--pink)" stroke-width="4" stroke-linejoin="round"/>
+
+  <!-- cabeza -->
+  <ellipse cx="200" cy="240" rx="95" ry="82" fill="var(--fur)"/>
+  <g stroke="var(--fur-dark)" stroke-width="7" stroke-linecap="round" fill="none">
+    <path d="M200 160 L200 190M180 165 L184 188M220 165 L216 188"/>
+  </g>
+  <ellipse cx="200" cy="276" rx="38" ry="28" fill="var(--cream)"/>
+
+  <!-- ojos -->
+  <g class="eye">
+    <ellipse cx="160" cy="232" rx="20" ry="22" fill="var(--iris)" stroke="var(--ink)" stroke-width="3"/>
+    <g class="pupil">
+      <ellipse cx="160" cy="232" rx="6" ry="16" fill="var(--ink)"/>
+      <circle cx="164" cy="225" r="4" fill="#fff"/>
+    </g>
+  </g>
+  <g class="eye">
+    <ellipse cx="240" cy="232" rx="20" ry="22" fill="var(--iris)" stroke="var(--ink)" stroke-width="3"/>
+    <g class="pupil">
+      <ellipse cx="240" cy="232" rx="6" ry="16" fill="var(--ink)"/>
+      <circle cx="244" cy="225" r="4" fill="#fff"/>
+    </g>
+  </g>
+
+  <!-- nariz y boca -->
+  <path d="M190 262 Q200 258 210 262 Q205 274 200 276 Q195 274 190 262 Z" fill="var(--pink)" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M200 276 L200 284M200 284 Q188 294 178 286M200 284 Q212 294 222 286" fill="none" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- bigotes -->
+  <g stroke="#fff" stroke-opacity=".85" stroke-width="2" stroke-linecap="round">
+    <path d="M165 278 L100 266M165 287 L98 292M235 278 L300 266M235 287 L302 292"/>
+  </g>
+</svg>
+<script>
+(function(){
+  var svg=document.querySelector('svg');
+  var pupils=document.querySelectorAll('.pupil');
+  function look(x,y){
+    var r=svg.getBoundingClientRect();
+    var dx=Math.max(-1,Math.min(1,(x-(r.left+r.width/2))/(r.width/2)));
+    var dy=Math.max(-1,Math.min(1,(y-(r.top+r.height*0.48))/(r.height/2)));
+    var t='translate('+(dx*8).toFixed(1)+' '+(dy*5).toFixed(1)+')';
+    pupils.forEach(function(p){p.setAttribute('transform',t)});
+  }
+  window.addEventListener('pointermove',function(e){look(e.clientX,e.clientY)});
+  window.addEventListener('pointerdown',function(e){look(e.clientX,e.clientY)});
+})();
+</script>
+</body>
+</html>
